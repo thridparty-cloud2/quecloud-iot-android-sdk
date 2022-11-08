@@ -1,0 +1,33 @@
+plugins {
+    id 'com.android.library'
+}
+apply from :"upload.gradle"
+
+android {
+    compileSdk 32
+
+    defaultConfig {
+        minSdk 21
+        targetSdk 32
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation 'com.google.code.gson:gson:2.8.2'
+    implementation 'org.greenrobot:eventbus:3.0.0'
+    implementation "com.squareup.okhttp3:okhttp:4.9.3"
+
+    implementation "com.quectel.app.service:quec-commontools:1.0.7"
+    implementation 'com.quectel.app.service:quec-log:1.0.1'
+}

@@ -1,0 +1,26 @@
+
+
+ext.writePom = { node ->
+    def allDependencies = new HashSet<DependencySet>()
+    allDependencies.addAll(configurations.api.allDependencies)
+    allDependencies.addAll(configurations.releaseApi.allDependencies)
+    allDependencies.addAll(configurations.implementation.allDependencies)
+    allDependencies.addAll(configurations.releaseImplementation.allDependencies)
+    def iterator = allDependencies.iterator()
+    while (iterator.hasNext()) {
+        def dep = iterator.next()
+        //移除project类型的依赖
+        if (dep.name == "unspecified" || dep.version == "unspecified") {
+            iterator.remove()
+        }
+    }
+
+    def depsNode = node.appendNode('dependencies')
+    allDependencies.each { dep ->
+        def depNode = depsNode.appendNode('dependency')
+        depNode.appendNode('groupId', dep.group)
+        depNode.appendNode('artifactId', dep.name)
+        depNode.appendNode('version', dep.version)
+        depNode.appendNode('scope', 'compile')
+    }
+}

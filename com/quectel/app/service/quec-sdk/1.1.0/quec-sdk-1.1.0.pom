@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.quectel.app.service</groupId>
+  <artifactId>quec-sdk</artifactId>
+  <version>1.1.0</version>
+  <packaging>aar</packaging>
+  <dependencies>
+    <dependency>
+      <groupId>com.quectel.app.service</groupId>
+      <artifactId>quec-ble</artifactId>
+      <version>1.0.3</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.quectel.app.service</groupId>
+      <artifactId>quec-userservice</artifactId>
+      <version>1.1.0</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.quectel.app.service</groupId>
+      <artifactId>quec-device-service</artifactId>
+      <version>1.0.6</version>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
+</project>

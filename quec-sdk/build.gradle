@@ -1,0 +1,63 @@
+buildscript {
+    repositories {
+        google()
+        jcenter()
+        mavenCentral()
+        maven { url "https://jitpack.io" }
+        maven {
+            url "https://raw.githubusercontent.com/thridparty-cloud2/quecloud-iot-android-sdk/master"
+        }
+    }
+
+}
+plugins {
+    id 'com.android.library'
+}
+//apply from :"upload.gradle"
+apply from :"upload_pub.gradle"
+android {
+    compileSdkVersion 30
+    defaultConfig {
+        minSdkVersion 19
+        targetSdkVersion 30
+        versionCode 1
+        versionName PUBLISH_VERSION
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            //控制构建打包的名称（模块名称-版本.aar）
+            android.libraryVariants.all { variant ->
+                variant.outputs.all {
+                    outputFileName = "${PUBLISH_ARTIFACT_ID}-${PUBLISH_VERSION}.aar"
+                }
+            }
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar",'*.aar'])
+    implementation 'com.quectel.app.service:quec-ble:1.0.3'
+    implementation 'com.quectel.app.service:quec-device-service:1.0.6'
+    implementation 'com.quectel.app.service:quec-userservice:1.1.0'
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        mavenCentral()
+        maven { url "https://jitpack.io" }
+        maven {
+            url "https://raw.githubusercontent.com/thridparty-cloud2/quecloud-iot-android-sdk/master"
+        }
+    }
+}

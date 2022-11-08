@@ -1,0 +1,29 @@
+apply plugin: 'maven-publish'
+apply from :"../writePom.gradle"
+
+ext {
+    PUBLISH_ARTIFACT_ID = 'quec-sdk'
+    PUBLISH_VERSION = '1.1.2'//每次升级，必改版本+拷贝新的jar/aar到lib
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            mavenAgent(MavenPublication) {
+                groupId PUBLISH_GROUP_ID
+                artifactId PUBLISH_ARTIFACT_ID
+                version PUBLISH_VERSION
+                artifact("libs/${PUBLISH_ARTIFACT_ID}-${PUBLISH_VERSION}.aar")
+                pom.packaging = 'aar'
+                pom.withXml {
+                    writePom(asNode())
+                }
+            }
+        }
+        repositories  {
+            maven{
+                url = project.GITHUB_REPO_PATH
+            }
+        }
+    }
+}

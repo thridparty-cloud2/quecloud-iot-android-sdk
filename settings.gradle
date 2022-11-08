@@ -1,0 +1,11 @@
+
+rootProject.name = "quesdk"
+
+include ':quec-log'
+include ':app'
+include ':quec-commontools'
+include ':quec-ble'
+include ':quec-network'
+include ':quec-device-service'
+include ':quec-userservice'
+include ':quec-sdk'

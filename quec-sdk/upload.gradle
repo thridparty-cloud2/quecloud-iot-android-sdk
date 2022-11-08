@@ -1,0 +1,45 @@
+apply plugin: 'maven-publish'
+apply from :"writePom.gradle"
+
+ext {
+    PUBLIST_GROUP_ID ="com.quectel.app.service"//组id
+    PUBLISH_ARTIFACT_ID = 'quec-sdk'//id
+    PUBLISH_VERSION = '1.1.2'//版本
+}
+
+//发布版直接使用版本号 测试版需要加上"-SNAPSHOT"
+def MAVEN_VERSION_NAME = PUBLISH_VERSION + "-SNAPSHOT"
+//正式发布路径
+def RELEASE_REPOSITORY_URL = "http://106.15.139.220:8081/repository/maven-releases/"
+//测试代码发布路径
+def SNAPSHOT_REPOSITORY_URL = "http://106.15.139.220:8081/repository/maven-snapshots/"
+
+afterEvaluate {
+    publishing {
+        publications {
+            mavenAgent(MavenPublication) {
+                groupId = PUBLIST_GROUP_ID
+                artifactId = PUBLISH_ARTIFACT_ID
+                version = MAVEN_VERSION_NAME
+                artifact("$buildDir/outputs/aar/${PUBLISH_ARTIFACT_ID}-${PUBLISH_VERSION}.aar")
+                pom.packaging = 'aar'
+                pom.withXml {
+                    writePom(asNode())
+                }
+            }
+        }
+
+        repositories {
+            maven {
+                credentials {
+                    username 'admin' // 仓库发布用户名
+                    password '********' // 仓库发布用户密码z
+                }
+                name = "nexus"
+                //根据名称不一样，发布不同的路径
+                url = MAVEN_VERSION_NAME.endsWith('SNAPSHOT') ? SNAPSHOT_REPOSITORY_URL : RELEASE_REPOSITORY_URL
+                allowInsecureProtocol = true
+            }
+        }
+    }
+}
